@@ -1410,7 +1410,7 @@ async function loadAvailability() {
 
     const data = await response.json();
     const blockedDates = new Set(data.blockedDates || []);
-    const monthsToShow = Number(data.monthsToShow || 12);
+    const monthsToShow = Math.max(12, Number(data.monthsToShow || 12));
     const updatedAt = data.updatedAt
       ? new Date(data.updatedAt).toLocaleString("en-GB", {
           day: "2-digit",
