@@ -526,7 +526,8 @@ img {
 
 .booking-layout {
   grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.28fr);
-  align-items: start;
+    align-items: start;
+    align-items: stretch;
 }
 
 .calendar-panel {
@@ -535,6 +536,7 @@ img {
   border-radius: var(--radius);
   background: var(--white);
   box-shadow: var(--shadow);
+  height: calc(100% - 24px);
 }
 
 .calendar-status {
