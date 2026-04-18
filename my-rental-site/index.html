@@ -553,10 +553,42 @@ img {
   color: rgba(35, 65, 76, 0.78);
 }
 
-.calendar-months {
+.calendar-slider {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.calendar-viewport {
+  overflow: hidden;
+}
+
+.calendar-track {
+  display: flex;
   gap: 20px;
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+.calendar-month {
+  flex: 0 0 calc(50% - 10px);
+  border: 1px solid rgba(35, 65, 76, 0.1);
+  border-radius: 16px;
+  padding: 18px;
+  background: #fffdfa;
+}
+
+.calendar-arrow {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(95, 147, 163, 0.16);
+  color: var(--ink);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .calendar-month {
@@ -795,11 +827,14 @@ footer {
     max-height: 386px;
   }
 
-  .location-facts,
-  .key-stats,
-  .calendar-months {
-    grid-template-columns: 1fr;
-  }
+ .location-facts,
+.key-stats {
+  grid-template-columns: 1fr;
+}
+
+.calendar-month {
+  flex: 0 0 100%;
+}
 
   .form-field-full {
     grid-column: auto;
@@ -1129,7 +1164,13 @@ footer {
       <div>
         <div class="calendar-panel">
           <div id="calendar-status" class="calendar-status">Loading live availability…</div>
-          <div id="calendar-months" class="calendar-months" aria-live="polite"></div>
+          <div class="calendar-slider">
+             <button class="calendar-arrow" id="calendar-prev" type="button" aria-label="Previous months">&#8592;</button>
+            <div class="calendar-viewport">
+             <div id="calendar-months" class="calendar-track" aria-live="polite"></div>
+          </div>
+          <button class="calendar-arrow" id="calendar-next" type="button" aria-label="Next months">&#8594;</button>
+      </div>
           <div class="calendar-legend">
             <span class="legend-available">Available</span>
             <span class="legend-blocked">Blocked or booked</span>
@@ -1312,7 +1353,7 @@ async function loadAvailability() {
 
     const data = await response.json();
     const blockedDates = new Set(data.blockedDates || []);
-    const monthsToShow = Number(data.monthsToShow || 4);
+    const monthsToShow = Number(data.monthsToShow || 12);
     const updatedAt = data.updatedAt
       ? new Date(data.updatedAt).toLocaleString("en-GB", {
           day: "2-digit",
@@ -1334,6 +1375,9 @@ async function loadAvailability() {
     for (let i = 0; i < monthsToShow; i += 1) {
       calendarMonths.appendChild(buildMonth(new Date(start.getFullYear(), start.getMonth() + i, 1), blockedDates));
     }
+    calendarIndex = 0;
+    setupCalendarSlider();
+    renderCalendarSlider();
 
     function validateSelection() {
       syncDepartureMin();
@@ -1363,6 +1407,60 @@ document.querySelectorAll("[data-slider]").forEach((slider) => {
   const dots = controls ? Array.from(controls.querySelectorAll(".slider-dot")) : [];
   const prevButton = slider.parentElement.querySelector("[data-slider-prev]");
   const nextButton = slider.parentElement.querySelector("[data-slider-next]");
+  let calendarIndex = 0;
+
+function getVisibleCalendarMonths() {
+  return window.innerWidth <= 900 ? 1 : 2;
+}
+
+function renderCalendarSlider() {
+  const track = document.getElementById("calendar-months");
+  if (!track) return;
+
+  const months = Array.from(track.children);
+  const visible = getVisibleCalendarMonths();
+
+  if (!months.length) return;
+
+  const maxIndex = Math.max(0, months.length - visible);
+  if (calendarIndex > maxIndex) {
+    calendarIndex = maxIndex;
+  }
+
+  const monthWidth = months[0].getBoundingClientRect().width;
+  const gap = 20;
+  const offset = calendarIndex * (monthWidth + gap);
+
+  track.style.transform = `translateX(-${offset}px)`;
+
+  const prev = document.getElementById("calendar-prev");
+  const next = document.getElementById("calendar-next");
+
+  if (prev) prev.disabled = calendarIndex === 0;
+  if (next) next.disabled = calendarIndex >= maxIndex;
+}
+
+function setupCalendarSlider() {
+  const prev = document.getElementById("calendar-prev");
+  const next = document.getElementById("calendar-next");
+  const track = document.getElementById("calendar-months");
+
+  if (!prev || !next || !track) return;
+
+  prev.addEventListener("click", () => {
+    calendarIndex = Math.max(0, calendarIndex - 1);
+    renderCalendarSlider();
+  });
+
+  next.addEventListener("click", () => {
+    const visible = getVisibleCalendarMonths();
+    const maxIndex = Math.max(0, track.children.length - visible);
+    calendarIndex = Math.min(maxIndex, calendarIndex + 1);
+    renderCalendarSlider();
+  });
+
+  window.addEventListener("resize", renderCalendarSlider);
+}
   let currentIndex = 0;
 
   function renderSlider() {
