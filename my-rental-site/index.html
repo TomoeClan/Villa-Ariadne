@@ -475,7 +475,6 @@ img {
 .slider-controls [data-slider-next] {
   grid-area: next;
   justify-self: end;
-  transform: translateX(2px);
 }
 
 .slider-arrow,
@@ -614,7 +613,7 @@ img {
 
 .booking-layout {
   grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.28fr);
-  align-items: start;
+  align-items: stretch;
 }
 
 .calendar-panel {
@@ -678,7 +677,11 @@ img {
 }
 
 #calendar-next {
-  transform: translateX(2px);
+}
+
+.slider-controls [data-slider-next],
+#calendar-next {
+  text-indent: 2px;
 }
 
 .calendar-month h3 {
@@ -840,8 +843,11 @@ button {
 }
 
 .booking-side {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 18px;
+  height: 100%;
 }
 
 .booking-side .note-card {
@@ -969,8 +975,12 @@ footer {
   }
 
   .booking-side {
-    order: -1;
+    order: 1;
     margin-bottom: 18px;
+  }
+
+  .booking-layout > div:first-child {
+    order: 2;
   }
 
   .booking-side .note-card:first-child {
