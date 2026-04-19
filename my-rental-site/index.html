@@ -737,19 +737,22 @@ img {
 
 .date-guidance {
   grid-column: 1 / -1;
-  margin-top: -4px;
+  margin-top: -10px;
 }
 
 .minimum-stay-note {
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   font-size: 0.94rem;
   color: rgba(35, 65, 76, 0.82);
 }
 
 .date-selection-message {
-  min-height: 22px;
   font-size: 0.94rem;
   color: #9a5b40;
+}
+
+.date-selection-message:empty {
+  display: none;
 }
 
 form {
