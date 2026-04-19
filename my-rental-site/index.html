@@ -735,6 +735,23 @@ img {
   color: #9a5b40;
 }
 
+.date-guidance {
+  grid-column: 1 / -1;
+  margin-top: -4px;
+}
+
+.minimum-stay-note {
+  margin: 0 0 8px;
+  font-size: 0.94rem;
+  color: rgba(35, 65, 76, 0.82);
+}
+
+.date-selection-message {
+  min-height: 22px;
+  font-size: 0.94rem;
+  color: #9a5b40;
+}
+
 form {
   padding: 34px;
   border-radius: var(--radius);
@@ -931,7 +948,7 @@ footer {
     </h2>
 
     <p class="hero-price">
-      €380-€420 per night depending on season · direct booking rates · hosting since 2012
+      €380-€420 per night depending on season · direct booking rates
     </p>
 
     <a href="#booking" class="button">Check Availability</a>
@@ -1265,10 +1282,6 @@ footer {
             <span class="legend-available">Available</span>
             <span class="legend-blocked">Blocked or booked</span>
           </div>
-          <div class="calendar-message" style="margin-top:14px; color: rgba(35, 65, 76, 0.82);">
-            Minimum stay: 3 nights
-          </div>
-          <div id="calendar-message" class="calendar-message"></div>
         </div>
 
         <form name="booking" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return validateMandatoryFields(event)">
@@ -1293,6 +1306,10 @@ footer {
             <div class="form-field">
               <label for="departure">Departure</label>
               <input id="departure" type="date" name="departure" required>
+            </div>
+            <div class="date-guidance">
+              <p class="minimum-stay-note">Minimum stay: 3 nights</p>
+              <div id="date-selection-message" class="date-selection-message"></div>
             </div>
             <div class="form-field form-field-full">
               <label for="guests">Number of Guests</label>
@@ -1344,7 +1361,7 @@ footer {
 <script>
 const calendarStatus = document.getElementById("calendar-status");
 const calendarMonths = document.getElementById("calendar-months");
-const calendarMessage = document.getElementById("calendar-message");
+const dateSelectionMessage = document.getElementById("date-selection-message");
 const arrivalInput = document.getElementById("arrival");
 const departureInput = document.getElementById("departure");
 const sectionMenu = document.querySelector(".section-menu");
@@ -1613,15 +1630,11 @@ async function loadAvailability() {
     function validateSelection() {
       syncDepartureMin();
 
-      if (
-        arrivalInput.value &&
-        departureInput.value &&
-        rangeHasBlockedDates(arrivalInput.value, departureInput.value, blockedDates)
-      ) {
-        calendarMessage.textContent =
+      if (arrivalInput.value && departureInput.value && rangeHasBlockedDates(arrivalInput.value, departureInput.value, blockedDates)) {
+        dateSelectionMessage.textContent =
           "Those dates include blocked nights in the synced calendars. Guests can still enquire, but it is best to choose different dates or mention flexibility.";
       } else {
-        calendarMessage.textContent = "";
+        dateSelectionMessage.textContent = "";
       }
     }
 
@@ -1634,7 +1647,9 @@ async function loadAvailability() {
     validateSelection();
   } catch (error) {
     calendarStatus.textContent = "Live availability could not be loaded right now.";
-    calendarMessage.textContent = "The enquiry form still works, and dates can be confirmed manually.";
+    if (dateSelectionMessage) {
+      dateSelectionMessage.textContent = "The enquiry form still works, and dates can be confirmed manually.";
+    }
   }
 }
 
