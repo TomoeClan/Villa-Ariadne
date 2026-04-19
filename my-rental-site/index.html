@@ -735,18 +735,14 @@ img {
   color: #9a5b40;
 }
 
-.date-guidance {
-  grid-column: 1 / -1;
-  margin-top: -10px;
-}
-
 .minimum-stay-note {
-  margin: 0 0 2px;
+  margin: 8px 0 0;
   font-size: 0.94rem;
   color: rgba(35, 65, 76, 0.82);
 }
 
 .date-selection-message {
+  margin-top: 2px;
   font-size: 0.94rem;
   color: #9a5b40;
 }
@@ -867,26 +863,47 @@ footer {
   }
 
   .section-menu {
-    padding: 0 16px;
+    padding: 0 12px;
   }
 
   .section-menu-shell {
     display: block;
     min-height: auto;
-    padding: 14px 0;
+    padding: 10px 0 8px;
   }
 
   .section-menu-label {
-    display: block;
-    margin-bottom: 10px;
+    display: none;
   }
 
   .section-menu nav {
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
-    gap: 18px;
-    padding-bottom: 4px;
+    gap: 10px;
+    padding: 0 2px 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  .section-menu nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section-menu a {
+    flex: 0 0 auto;
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(95, 147, 163, 0.12);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .section-menu a::after {
+    display: none;
   }
 
   .intro-grid,
@@ -1309,8 +1326,6 @@ footer {
             <div class="form-field">
               <label for="departure">Departure</label>
               <input id="departure" type="date" name="departure" required>
-            </div>
-            <div class="date-guidance">
               <p class="minimum-stay-note">Minimum stay: 3 nights</p>
               <div id="date-selection-message" class="date-selection-message"></div>
             </div>
