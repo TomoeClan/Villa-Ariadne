@@ -455,15 +455,14 @@ img {
 }
 
 .slider-controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
 }
 
 .slider-arrows {
-  display: inline-flex;
-  gap: 10px;
+  display: contents;
 }
 
 .slider-arrow,
@@ -486,6 +485,7 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .slider-dot {
@@ -969,8 +969,62 @@ footer {
     grid-template-columns: 1fr;
   }
 
+  .calendar-panel {
+    padding: 20px;
+  }
+
+  .calendar-slider {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "viewport viewport"
+      "prev next";
+    gap: 12px;
+  }
+
+  .calendar-viewport {
+    grid-area: viewport;
+    min-width: 0;
+  }
+
+  #calendar-prev {
+    grid-area: prev;
+  }
+
+  #calendar-next {
+    grid-area: next;
+  }
+
+  .calendar-arrow {
+    width: 100%;
+    height: 40px;
+  }
+
   .calendar-month {
     flex: 0 0 100%;
+    min-width: 0;
+    padding: 14px;
+  }
+
+  .calendar-month h3 {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+  }
+
+  .calendar-weekdays,
+  .calendar-days {
+    gap: 4px;
+  }
+
+  .calendar-weekdays span {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .calendar-day {
+    min-height: 34px;
+    border-radius: 9px;
+    font-size: 0.82rem;
   }
 
   .form-field-full {
