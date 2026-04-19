@@ -864,6 +864,7 @@ footer {
 
   .section-menu {
     padding: 0 12px;
+    position: sticky;
   }
 
   .section-menu-shell {
@@ -877,6 +878,7 @@ footer {
   }
 
   .section-menu nav {
+    position: relative;
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -889,6 +891,28 @@ footer {
 
   .section-menu nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .section-menu-shell::after {
+    content: "Swipe for more";
+    display: block;
+    margin-top: 4px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(35, 65, 76, 0.58);
+  }
+
+  .section-menu nav::after {
+    content: "";
+    position: sticky;
+    right: 0;
+    width: 28px;
+    min-width: 28px;
+    height: 38px;
+    margin-left: -28px;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(252, 247, 239, 0), rgba(252, 247, 239, 0.96));
   }
 
   .section-menu a {
