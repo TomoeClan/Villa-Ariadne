@@ -485,11 +485,15 @@ img {
 .slider-arrow {
   width: 42px;
   height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   background: rgba(95, 147, 163, 0.16);
   color: var(--ink);
   font-size: 1.1rem;
   line-height: 1;
+  padding: 0;
 }
 
 .slider-dots {
@@ -654,12 +658,16 @@ img {
 .calendar-arrow {
   width: 42px;
   height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   border-radius: 999px;
   background: rgba(95, 147, 163, 0.16);
   color: var(--ink);
   font-size: 1.1rem;
   line-height: 1;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -948,6 +956,11 @@ footer {
   .booking-layout,
   .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .booking-side {
+    order: -1;
+    margin-bottom: 18px;
   }
 
   .house-showcase,
