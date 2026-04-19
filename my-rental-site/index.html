@@ -176,6 +176,74 @@ img {
   opacity: 0.96;
 }
 
+.section-menu {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 0 20px;
+  background: rgba(252, 247, 239, 0.96);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(35, 65, 76, 0.08);
+  border-bottom: 1px solid rgba(35, 65, 76, 0.08);
+}
+
+.section-menu-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 68px;
+}
+
+.section-menu-label {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(35, 65, 76, 0.68);
+}
+
+.section-menu nav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 22px;
+  flex: 1 1 auto;
+}
+
+.section-menu a {
+  position: relative;
+  display: inline-block;
+  padding: 6px 0;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.section-menu a:hover::after,
+.section-menu a:focus-visible::after {
+  opacity: 0.55;
+  transform: scaleX(1);
+}
+
 .intro-grid,
 .intro-cards,
 .house-layout,
@@ -778,6 +846,29 @@ footer {
     padding: 68px 20px;
   }
 
+  .section-menu {
+    padding: 0 16px;
+  }
+
+  .section-menu-shell {
+    display: block;
+    min-height: auto;
+    padding: 14px 0;
+  }
+
+  .section-menu-label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .section-menu nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 18px;
+    padding-bottom: 4px;
+  }
+
   .intro-grid,
   .intro-cards,
   .location-content,
@@ -840,14 +931,27 @@ footer {
     </h2>
 
     <p class="hero-price">
-      €380-€420 per night depending on season · direct booking rates · hosting guests since 2012
+      €380-€420 per night depending on season · direct booking rates
     </p>
 
     <a href="#booking" class="button">Check Availability</a>
   </div>
 </div>
 
-<section class="section section-light">
+<div class="section-menu">
+  <div class="section-menu-shell">
+    <span class="section-menu-label">Explore</span>
+    <nav aria-label="Page sections">
+      <a href="#overview" data-scroll-adjust="62">Overview</a>
+      <a href="#poolside-house" data-scroll-adjust="-76">Poolside House</a>
+      <a href="#tophill-house">Tophill House</a>
+      <a href="#location" data-scroll-adjust="70">Location</a>
+      <a href="#booking-start">Enquiries</a>
+    </nav>
+  </div>
+</div>
+
+<section class="section section-light" id="overview">
   <div class="section-shell intro-grid">
     <div>
       <span class="eyebrow">One Villa, Two Houses</span>
@@ -859,7 +963,7 @@ footer {
         They have exclusive access to all amenities during their stay.
       </p>
       <p>
-        The villa is ideal for families, couples travelling together, or small groups who wish to stay close while still enjoying their own space and independence.
+        The villa is ideal for families, couples traveling together, or small groups who wish to stay close while still enjoying their own space and independence.
         We also welcome small, trained pets.
       </p>
     </div>
@@ -886,7 +990,7 @@ footer {
         <h3>The Villa at a Glance</h3>
         <ul class="shared-villa-list">
           <li>Both houses are part of the same private villa and are rented together as a single, shared property experience. All rooms have air conditioning.</li>
-          <li>Each residence has its own distinct character and layout, offering flexibility and comfort for mixed groups travelling together.</li>
+          <li>Each residence has its own distinct character and layout, offering flexibility and comfort for mixed groups traveling together.</li>
           <li>The swimming pool, patios, and outdoor dining areas are all set within the same cohesive villa environment.</li>
           <li>Guests enjoy exclusive use of the villa's outdoor spaces and amenities throughout their stay.</li>
         </ul>
@@ -895,11 +999,11 @@ footer {
   </div>
 </section>
 
-<section class="section section-cream">
+<section class="section section-cream" id="inside-villa">
   <div class="section-shell">
     <span class="eyebrow">Inside the Villa</span>
     <div class="villa-showcase">
-      <section class="house-section">
+      <section class="house-section" id="poolside-house">
         <h2>Poolside House</h2>
         <article class="house-showcase">
           <div class="house-photos house-photos-top">
@@ -1003,7 +1107,7 @@ footer {
         </article>
       </section>
 
-      <section class="house-section">
+      <section class="house-section" id="tophill-house">
         <h2>Top Hill House</h2>
         <article class="house-showcase">
           <div class="house-photos house-photos-top">
@@ -1097,7 +1201,7 @@ footer {
   </div>
 </section>
 
-<section class="section section-dark">
+<section class="section section-dark" id="location">
   <div class="section-shell location-grid">
     <div>
       <span class="eyebrow">Location</span>
@@ -1142,7 +1246,7 @@ footer {
 
 <section class="section section-light" id="booking">
   <div class="section-shell">
-    <div class="booking-header">
+    <div class="booking-header" id="booking-start">
       <span class="eyebrow">Calendar & Enquiries</span>
       <h2>Check availability and plan your stay</h2>
     </div>
@@ -1240,6 +1344,8 @@ const calendarMonths = document.getElementById("calendar-months");
 const calendarMessage = document.getElementById("calendar-message");
 const arrivalInput = document.getElementById("arrival");
 const departureInput = document.getElementById("departure");
+const sectionMenu = document.querySelector(".section-menu");
+const menuLinks = document.querySelectorAll(".section-menu a[href^='#']");
 
 const isoToday = new Date().toISOString().slice(0, 10);
 let calendarIndex = 0;
@@ -1380,6 +1486,29 @@ function validateMandatoryFields(event) {
 
   return isValid;
 }
+
+menuLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = link.getAttribute("href");
+    const target = targetId ? document.querySelector(targetId) : null;
+
+    if (!target || !sectionMenu) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const menuHeight = sectionMenu.offsetHeight;
+    const extraGap = window.innerWidth <= 900 ? 20 : 24;
+    const customAdjust = Number(link.dataset.scrollAdjust || 0);
+    const top = target.getBoundingClientRect().top + window.scrollY - menuHeight - extraGap + customAdjust;
+
+    window.scrollTo({
+      top,
+      behavior: "smooth"
+    });
+  });
+});
 
 function getVisibleCalendarMonths() {
   return window.innerWidth <= 900 ? 1 : 2;
