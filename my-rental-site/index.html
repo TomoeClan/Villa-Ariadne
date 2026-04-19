@@ -1265,10 +1265,13 @@ footer {
             <span class="legend-available">Available</span>
             <span class="legend-blocked">Blocked or booked</span>
           </div>
+          <div class="calendar-message" style="margin-top:14px; color: rgba(35, 65, 76, 0.82);">
+            Minimum stay: 3 nights
+          </div>
           <div id="calendar-message" class="calendar-message"></div>
         </div>
 
-        <form name="booking" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return validateMandatoryFields(event)">
+        <form name="booking" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return validateMandatoryFields(event)">
           <input type="hidden" name="form-name" value="booking">
           <p hidden>
             <label>Do not fill this out: <input name="bot-field"></label>
