@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You | Villa Ariadne</title>
+<meta name="description" content="Your enquiry has been submitted to Villa Ariadne in Porto Heli.">
+<style>
+:root {
+  --ink: #23414c;
+  --teal-deep: #467a89;
+  --sand: #f6efe3;
+  --white: #ffffff;
+  --shadow: 0 20px 45px rgba(35, 65, 76, 0.12);
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(rgba(70, 122, 137, 0.7), rgba(70, 122, 137, 0.7)),
+    url("Images/villa-view.jpg");
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.thank-you-card {
+  width: min(680px, 100%);
+  padding: 48px 34px;
+  border-radius: var(--radius);
+  background: rgba(246, 239, 227, 0.94);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.06;
+}
+
+p,
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  margin: 0 0 16px;
+  font-size: 1.03rem;
+  line-height: 1.7;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 13px 24px;
+  border-radius: 8px;
+  background: var(--teal-deep);
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.92rem;
+}
+</style>
+</head>
+<body>
+  <main class="thank-you-card">
+    <h1>Your message has been submitted</h1>
+    <p>Thank you for your enquiry. We have received your message and will get back to you as soon as possible.</p>
+    <a class="button" href="/index.html">Back to Villa Ariadne</a>
+  </main>
+</body>
+</html>
