@@ -615,9 +615,11 @@ img {
   grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.28fr);
   align-items: start;
   gap: 28px;
+  grid-template-areas: "main side";
 }
 
 .booking-main {
+  grid-area: main;
   display: grid;
   gap: 20px;
 }
@@ -849,25 +851,31 @@ button {
 }
 
 .booking-side {
+  grid-area: side;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   align-self: start;
 }
 
 .booking-side .note-card {
-  padding: 16px 18px;
+  padding: 14px 16px;
   background: rgba(95, 147, 163, 0.08);
   border: 1px solid rgba(35, 65, 76, 0.1);
   color: var(--ink);
 }
 
 .booking-side .note-card h3 {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .booking-side .note-card ul {
-  margin-top: 10px;
+  margin-top: 8px;
+}
+
+.booking-side .note-card p,
+.booking-side .note-card li {
+  line-height: 1.55;
 }
 
 .booking-side .note-card p,
@@ -989,23 +997,21 @@ footer {
 
   .booking-layout {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "side"
+      "main";
   }
 
   .booking-side {
-    order: 1;
     margin-bottom: 18px;
   }
 
-  .booking-main {
-    order: 2;
-  }
-
-  .booking-side .note-card:first-child {
-    order: 2;
-  }
-
-  .booking-side .note-card:last-child {
+  .booking-side .booking-card-enquiry {
     order: 1;
+  }
+
+  .booking-side .booking-card-availability {
+    order: 2;
   }
 
   .house-showcase,
@@ -1497,13 +1503,13 @@ footer {
       </div>
 
       <aside class="booking-side">
-        <div class="note-card">
+        <div class="note-card booking-card-availability">
           <h3>Availability process</h3>
           <p>
             Send your preferred dates and we'll check availability for the full villa, including both houses. Please note that the minimum stay is 3 nights. We respond within 24 hours.
           </p>
         </div>
-        <div class="note-card">
+        <div class="note-card booking-card-enquiry">
           <h3>What to include in your enquiry</h3>
           <ul>
             <li>Your preferred arrival and departure dates</li>
@@ -1673,12 +1679,6 @@ function validateMandatoryFields(event) {
   return isValid;
 }
 
-function encodeFormData(formData) {
-  return Array.from(formData.entries())
-    .map(([key, value]) => encodeURIComponent(key) + "=" + encodeURIComponent(value))
-    .join("&");
-}
-
 menuLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
@@ -1829,7 +1829,6 @@ arrivalInput.addEventListener("change", syncDepartureMin);
 
 const guestsField = document.getElementById("guests");
 const messageField = document.getElementById("message");
-const bookingForm = document.forms["booking"];
 
 if (guestsField) {
   guestsField.addEventListener("input", () => {
@@ -1840,47 +1839,6 @@ if (guestsField) {
 if (messageField) {
   messageField.addEventListener("input", () => {
     messageField.setCustomValidity("");
-  });
-}
-
-if (bookingForm) {
-  bookingForm.addEventListener("submit", async (event) => {
-    if (!validateMandatoryFields(event)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const submitButton = bookingForm.querySelector('button[type="submit"]');
-    const originalLabel = submitButton ? submitButton.textContent : "";
-
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = "Sending...";
-    }
-
-    try {
-      const formData = new FormData(bookingForm);
-      const response = await fetch("/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: encodeFormData(formData)
-      });
-
-      if (!response.ok) {
-        throw new Error("Form submission failed.");
-      }
-
-      window.location.href = bookingForm.getAttribute("action") || "/thank-you.html";
-    } catch (error) {
-      alert("Your message could not be sent just now. Please try again.");
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = originalLabel;
-      }
-    }
   });
 }
 
