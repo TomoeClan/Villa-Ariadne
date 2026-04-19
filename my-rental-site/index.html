@@ -614,11 +614,12 @@ img {
 .booking-layout {
   grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.28fr);
   align-items: start;
+  gap: 28px;
 }
 
 .booking-main {
   display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .calendar-panel {
@@ -850,15 +851,23 @@ button {
 .booking-side {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
   align-self: start;
 }
 
 .booking-side .note-card {
-  padding: 18px 20px;
+  padding: 16px 18px;
   background: rgba(95, 147, 163, 0.08);
   border: 1px solid rgba(35, 65, 76, 0.1);
   color: var(--ink);
+}
+
+.booking-side .note-card h3 {
+  margin-bottom: 8px;
+}
+
+.booking-side .note-card ul {
+  margin-top: 10px;
 }
 
 .booking-side .note-card p,
@@ -980,6 +989,23 @@ footer {
 
   .booking-layout {
     grid-template-columns: 1fr;
+  }
+
+  .booking-side {
+    order: 1;
+    margin-bottom: 18px;
+  }
+
+  .booking-main {
+    order: 2;
+  }
+
+  .booking-side .note-card:first-child {
+    order: 2;
+  }
+
+  .booking-side .note-card:last-child {
+    order: 1;
   }
 
   .house-showcase,
@@ -1647,6 +1673,12 @@ function validateMandatoryFields(event) {
   return isValid;
 }
 
+function encodeFormData(formData) {
+  return Array.from(formData.entries())
+    .map(([key, value]) => encodeURIComponent(key) + "=" + encodeURIComponent(value))
+    .join("&");
+}
+
 menuLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
@@ -1797,6 +1829,7 @@ arrivalInput.addEventListener("change", syncDepartureMin);
 
 const guestsField = document.getElementById("guests");
 const messageField = document.getElementById("message");
+const bookingForm = document.forms["booking"];
 
 if (guestsField) {
   guestsField.addEventListener("input", () => {
@@ -1807,6 +1840,47 @@ if (guestsField) {
 if (messageField) {
   messageField.addEventListener("input", () => {
     messageField.setCustomValidity("");
+  });
+}
+
+if (bookingForm) {
+  bookingForm.addEventListener("submit", async (event) => {
+    if (!validateMandatoryFields(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const submitButton = bookingForm.querySelector('button[type="submit"]');
+    const originalLabel = submitButton ? submitButton.textContent : "";
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+
+    try {
+      const formData = new FormData(bookingForm);
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: encodeFormData(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed.");
+      }
+
+      window.location.href = bookingForm.getAttribute("action") || "/thank-you.html";
+    } catch (error) {
+      alert("Your message could not be sent just now. Please try again.");
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
+    }
   });
 }
 
