@@ -614,19 +614,31 @@ img {
 .booking-layout {
   grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.28fr);
   align-items: start;
-  gap: 28px;
-  grid-template-areas: "main side";
+  gap: 24px;
+  grid-template-areas:
+    "calendar availability"
+    "form enquiry";
 }
 
-.booking-main {
-  grid-area: main;
-  display: grid;
-  gap: 20px;
+.booking-calendar {
+  grid-area: calendar;
+}
+
+.booking-form {
+  grid-area: form;
+}
+
+.booking-card-availability {
+  grid-area: availability;
+}
+
+.booking-card-enquiry {
+  grid-area: enquiry;
 }
 
 .calendar-panel {
-  margin-bottom: 24px;
-  padding: 24px;
+  margin-bottom: 0;
+  padding: 26px;
   border-radius: var(--radius);
   background: var(--white);
   box-shadow: var(--shadow);
@@ -850,45 +862,31 @@ button {
   cursor: pointer;
 }
 
-.booking-side {
-  grid-area: side;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.booking-layout .note-card {
+  padding: 19px 21px;
+  background: rgba(95, 147, 163, 0.12);
+  border: 1px solid rgba(35, 65, 76, 0.1);
+  color: var(--ink);
   align-self: start;
 }
 
-.booking-side .note-card {
-  padding: 12px 14px;
-  background: rgba(95, 147, 163, 0.08);
-  border: 1px solid rgba(35, 65, 76, 0.1);
+.booking-layout .note-card h3 {
+  margin-bottom: 8px;
+}
+
+.booking-layout .note-card ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.booking-layout .note-card p,
+.booking-layout .note-card li {
+  line-height: 1.55;
+}
+
+.booking-layout .note-card p,
+.booking-layout .note-card li {
   color: var(--ink);
-}
-
-.booking-side .note-card h3 {
-  margin-bottom: 4px;
-}
-
-.booking-side .note-card ul {
-  margin-top: 6px;
-}
-
-.booking-side .note-card p,
-.booking-side .note-card li {
-  line-height: 1.48;
-}
-
-.mobile-only {
-  display: none;
-}
-
-.booking-side .note-card p,
-.booking-side .note-card li {
-  color: rgba(35, 65, 76, 0.85);
-}
-
-.booking-side .note-card ul {
-  margin-top: 14px;
 }
 
 .booking-footnote {
@@ -1002,20 +1000,14 @@ footer {
   .booking-layout {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "main"
-      "side";
+      "availability"
+      "calendar"
+      "enquiry"
+      "form";
   }
 
-  .booking-side {
+  .booking-layout .note-card {
     margin-bottom: 18px;
-  }
-
-  .mobile-only {
-    display: block;
-  }
-
-  .booking-side .booking-card-enquiry {
-    display: none;
   }
 
   .house-showcase,
@@ -1476,25 +1468,7 @@ footer {
       <h2>Check availability and plan your stay</h2>
     </div>
     <div class="booking-layout">
-      <aside class="booking-side">
-        <div class="note-card booking-card-availability">
-          <h3>Availability process</h3>
-          <p>
-            Send your preferred dates and we'll check availability for the full villa, including both houses. Please note that the minimum stay is 3 nights. We respond within 24 hours.
-          </p>
-        </div>
-        <div class="note-card booking-card-enquiry">
-          <h3>What to include in your enquiry</h3>
-          <ul>
-            <li>Your preferred arrival and departure dates</li>
-            <li>How many adults and children are in your group</li>
-            <li>Whether you are traveling with a small trained pet</li>
-            <li>Any flexibility if your first choice dates are full</li>
-          </ul>
-        </div>
-      </aside>
-
-      <div class="booking-main">
+      <div class="booking-calendar">
         <div class="calendar-panel">
           <div id="calendar-status" class="calendar-status">Loading live availability...</div>
           <div class="calendar-slider">
@@ -1509,61 +1483,68 @@ footer {
             <span class="legend-blocked">Blocked or booked</span>
           </div>
         </div>
+      </div>
 
-        <div class="note-card booking-card-enquiry mobile-only">
-          <h3>What to include in your enquiry</h3>
-          <ul>
-            <li>Your preferred arrival and departure dates</li>
-            <li>How many adults and children are in your group</li>
-            <li>Whether you are traveling with a small trained pet</li>
-            <li>Any flexibility if your first choice dates are full</li>
-          </ul>
-        </div>
-
-        <form name="booking" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return validateMandatoryFields(event)">
-          <input type="hidden" name="form-name" value="booking">
-          <p hidden>
-            <label>Do not fill this out: <input name="bot-field"></label>
-          </p>
-
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="name">Your Name</label>
-              <input id="name" type="text" name="name" required>
-            </div>
-            <div class="form-field">
-              <label for="email">Email Address</label>
-              <input id="email" type="email" name="email" required>
-            </div>
-            <div class="form-field">
-              <label for="arrival">Arrival</label>
-              <input id="arrival" type="date" name="arrival" required>
-            </div>
-            <div class="form-field">
-              <label for="departure">Departure</label>
-              <input id="departure" type="date" name="departure" required>
-              <p class="minimum-stay-note">Minimum stay: 3 nights</p>
-              <div id="date-selection-message" class="date-selection-message"></div>
-            </div>
-            <div class="form-field form-field-full">
-              <label for="guests">Number of Guests</label>
-              <input id="guests" type="number" name="guests" min="1" max="9" required>
-            </div>
-            <div class="form-field form-field-full">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="Tell us a little about your group, preferred dates, and any questions you have." required></textarea>
-            </div>
-            <div class="form-field form-field-full">
-              <button type="submit">Send Enquiry</button>
-            </div>
-          </div>
-        </form>
-
-        <p class="booking-footnote">
-          Payments are made in two instalments. Reservations are confirmed after the deposit is received. Full booking and cancellation terms are shared before confirmation.
+      <div class="note-card booking-card-availability">
+        <h3>Availability process</h3>
+        <p>
+          Send your preferred dates and we'll check availability for the full villa, including both houses. Please note that the minimum stay is 3 nights. We respond within 24 hours.
         </p>
       </div>
+
+      <form class="booking-form" name="booking" method="POST" action="/enquiry-submitted.html" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return validateMandatoryFields(event)">
+        <input type="hidden" name="form-name" value="booking">
+        <p hidden>
+          <label>Do not fill this out: <input name="bot-field"></label>
+        </p>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="name">Your Name</label>
+            <input id="name" type="text" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email Address</label>
+            <input id="email" type="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="arrival">Arrival</label>
+            <input id="arrival" type="date" name="arrival" required>
+          </div>
+          <div class="form-field">
+            <label for="departure">Departure</label>
+            <input id="departure" type="date" name="departure" required>
+            <p class="minimum-stay-note">Minimum stay: 3 nights</p>
+            <div id="date-selection-message" class="date-selection-message"></div>
+          </div>
+          <div class="form-field form-field-full">
+            <label for="guests">Number of Guests</label>
+            <input id="guests" type="number" name="guests" min="1" max="9" required>
+          </div>
+          <div class="form-field form-field-full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us a little about your group, preferred dates, and any questions you have." required></textarea>
+          </div>
+          <div class="form-field form-field-full">
+            <button type="submit">Send Enquiry</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="note-card booking-card-enquiry">
+        <h3>What to include in your enquiry</h3>
+        <ul>
+          <li>Your preferred arrival and departure dates</li>
+          <li>How many adults and children are in your group</li>
+          <li>Whether you are traveling with a small trained pet</li>
+          <li>Any flexibility if your first choice dates are full</li>
+        </ul>
+      </div>
     </div>
+
+    <p class="booking-footnote">
+      Payments are made in two instalments. Reservations are confirmed after the deposit is received. Full booking and cancellation terms are shared before confirmation.
+    </p>
   </div>
 </section>
 
@@ -1723,6 +1704,10 @@ function validateMandatoryFields(event) {
   return isValid;
 }
 
+function encodeFormData(form) {
+  return new URLSearchParams(new FormData(form)).toString();
+}
+
 menuLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
@@ -1873,6 +1858,7 @@ arrivalInput.addEventListener("change", syncDepartureMin);
 
 const guestsField = document.getElementById("guests");
 const messageField = document.getElementById("message");
+const bookingForm = document.forms["booking"];
 
 if (guestsField) {
   guestsField.addEventListener("input", () => {
@@ -1883,6 +1869,47 @@ if (guestsField) {
 if (messageField) {
   messageField.addEventListener("input", () => {
     messageField.setCustomValidity("");
+  });
+}
+
+if (bookingForm) {
+  bookingForm.addEventListener("submit", async (event) => {
+    if (!validateMandatoryFields(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const submitButton = bookingForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton ? submitButton.textContent : "";
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: encodeFormData(bookingForm)
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      window.location.href = "/enquiry-submitted.html";
+    } catch (error) {
+      alert("Your enquiry could not be sent just now. Please try again.");
+
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
+    }
   });
 }
 
