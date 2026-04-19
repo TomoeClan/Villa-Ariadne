@@ -457,12 +457,23 @@ img {
 .slider-controls {
   display: grid;
   grid-template-columns: auto 1fr auto;
+  grid-template-areas: "prev dots next";
   align-items: center;
   gap: 16px;
 }
 
 .slider-arrows {
   display: contents;
+}
+
+.slider-controls [data-slider-prev] {
+  grid-area: prev;
+  justify-self: start;
+}
+
+.slider-controls [data-slider-next] {
+  grid-area: next;
+  justify-self: end;
 }
 
 .slider-arrow,
@@ -482,6 +493,7 @@ img {
 }
 
 .slider-dots {
+  grid-area: dots;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
