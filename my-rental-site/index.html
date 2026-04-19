@@ -469,11 +469,13 @@ img {
 .slider-controls [data-slider-prev] {
   grid-area: prev;
   justify-self: start;
+  transform: translateX(2px);
 }
 
 .slider-controls [data-slider-next] {
   grid-area: next;
   justify-self: end;
+  transform: translateX(2px);
 }
 
 .slider-arrow,
@@ -669,6 +671,14 @@ img {
   line-height: 1;
   padding: 0;
   cursor: pointer;
+}
+
+#calendar-prev {
+  transform: translateX(2px);
+}
+
+#calendar-next {
+  transform: translateX(2px);
 }
 
 .calendar-month h3 {
@@ -961,6 +971,14 @@ footer {
   .booking-side {
     order: -1;
     margin-bottom: 18px;
+  }
+
+  .booking-side .note-card:first-child {
+    order: 2;
+  }
+
+  .booking-side .note-card:last-child {
+    order: 1;
   }
 
   .house-showcase,
