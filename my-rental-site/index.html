@@ -613,7 +613,12 @@ img {
 
 .booking-layout {
   grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.28fr);
-  align-items: stretch;
+  align-items: start;
+}
+
+.booking-main {
+  display: grid;
+  gap: 24px;
 }
 
 .calendar-panel {
@@ -845,12 +850,12 @@ button {
 .booking-side {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
-  height: 100%;
+  gap: 14px;
+  align-self: start;
 }
 
 .booking-side .note-card {
+  padding: 18px 20px;
   background: rgba(95, 147, 163, 0.08);
   border: 1px solid rgba(35, 65, 76, 0.1);
   color: var(--ink);
@@ -969,26 +974,12 @@ footer {
   .intro-grid,
   .intro-cards,
   .location-content,
-  .booking-layout,
   .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .booking-side {
-    order: 1;
-    margin-bottom: 18px;
-  }
-
-  .booking-layout > div:first-child {
-    order: 2;
-  }
-
-  .booking-side .note-card:first-child {
-    order: 2;
-  }
-
-  .booking-side .note-card:last-child {
-    order: 1;
+  .booking-layout {
+    grid-template-columns: 1fr;
   }
 
   .house-showcase,
@@ -1419,7 +1410,7 @@ footer {
       <h2>Check availability and plan your stay</h2>
     </div>
     <div class="booking-layout">
-      <div>
+      <div class="booking-main">
         <div class="calendar-panel">
           <div id="calendar-status" class="calendar-status">Loading live availability...</div>
           <div class="calendar-slider">
