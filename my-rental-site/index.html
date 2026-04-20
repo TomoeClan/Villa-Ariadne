@@ -494,7 +494,7 @@ img {
   object-fit: initial;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1121px) {
   #poolside-house .house-slide-pair.poolside-pair img {
     max-height: 380px;
   }
@@ -1008,7 +1008,7 @@ footer {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
   #poolside-house .house-photos-top {
     gap: 8px;
   }
@@ -1133,6 +1133,27 @@ footer {
     min-height: 386px;
     height: 386px;
     max-height: 386px;
+  }
+
+  #poolside-house .house-slide-pair.poolside-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #poolside-house .house-slide-pair.poolside-pair figure {
+    min-height: 252px;
+    height: 252px;
+    max-height: 252px;
+  }
+
+  #poolside-house .house-slide-pair.poolside-pair img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #poolside-house .house-slide-pair.poolside-pair figcaption {
+    padding: 10px 12px;
+    font-size: 0.74rem;
   }
 
   .location-facts,
