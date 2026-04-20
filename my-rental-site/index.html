@@ -351,6 +351,7 @@ img {
   position: relative;
   overflow: hidden;
   border-radius: 16px;
+  transition: height 0.35s ease;
 }
 
 .house-slider-track {
@@ -360,6 +361,7 @@ img {
 }
 
 .house-slide {
+  flex: 0 0 100%;
   min-width: 100%;
 }
 
@@ -1245,6 +1247,14 @@ footer {
                 <div class="house-slide">
                   <div class="house-photo-main">
                     <figure>
+                      <img src="Images/villa-poolside-bougainvillea.jpg" alt="Bougainvillea beside the Poolside House">
+                      <figcaption>Bougainvilleas in the patio of the Poolside House.</figcaption>
+                    </figure>
+                  </div>
+                </div>
+                <div class="house-slide">
+                  <div class="house-photo-main">
+                    <figure>
                       <img src="Images/villa-poolside-main-space.jpg" alt="Main living space in the Poolside House">
                       <figcaption>Open-plan lounge and sleeping area with a double bed.</figcaption>
                     </figure>
@@ -1286,6 +1296,14 @@ footer {
                     </figure>
                   </div>
                 </div>
+                <div class="house-slide">
+                  <div class="house-photo-main">
+                    <figure>
+                      <img src="Images/villa-poolside-dining-sunset.jpg" alt="Outdoor dining area at sunset beside the Poolside House">
+                      <figcaption>Outdoor dining by the Poolside House at sunset.</figcaption>
+                    </figure>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="slider-controls">
@@ -1301,6 +1319,8 @@ footer {
                 <button class="slider-dot" type="button" aria-label="Show Poolside House slide 5"></button>
                 <button class="slider-dot" type="button" aria-label="Show Poolside House slide 6"></button>
                 <button class="slider-dot" type="button" aria-label="Show Poolside House slide 7"></button>
+                <button class="slider-dot" type="button" aria-label="Show Poolside House slide 8"></button>
+                <button class="slider-dot" type="button" aria-label="Show Poolside House slide 9"></button>
               </div>
             </div>
           </div>
@@ -1543,8 +1563,7 @@ footer {
     </div>
 
     <p class="booking-footnote">
-      Payments are made in two instalments. Reservations are confirmed after the deposit is received. 
-      Full booking and cancellation terms are shared before confirmation.
+      Payments are made in two instalments. Reservations are confirmed after the deposit is received. Full booking and cancellation terms are shared before confirmation.
     </p>
   </div>
 </section>
@@ -1925,11 +1944,21 @@ document.querySelectorAll("[data-slider]").forEach((slider) => {
   const nextButton = slider.parentElement.querySelector("[data-slider-next]");
   let currentIndex = 0;
 
+  function syncSliderHeight() {
+    const activeSlide = slides[currentIndex];
+    if (!activeSlide) {
+      return;
+    }
+
+    slider.style.height = activeSlide.offsetHeight + "px";
+  }
+
   function renderSlider() {
     track.style.transform = "translateX(-" + currentIndex * 100 + "%)";
     dots.forEach((dot, index) => {
       dot.classList.toggle("is-active", index === currentIndex);
     });
+    syncSliderHeight();
   }
 
   if (prevButton) {
@@ -1953,6 +1982,15 @@ document.querySelectorAll("[data-slider]").forEach((slider) => {
     });
   });
 
+  slides.forEach((slide) => {
+    slide.querySelectorAll("img").forEach((img) => {
+      if (!img.complete) {
+        img.addEventListener("load", syncSliderHeight);
+      }
+    });
+  });
+
+  window.addEventListener("resize", syncSliderHeight);
   renderSlider();
 });
 </script>
