@@ -19,16 +19,7 @@
 <meta name="twitter:title" content="Villa Ariadne | Private Villa in Porto Heli with Pool & Panoramic Views">
 <meta name="twitter:description" content="Private villa in Porto Heli with pool, panoramic views, and two separate houses. Ideal for families and groups, close to beaches and Spetses.">
 <meta name="twitter:image" content="https://villaariadneportoheli.com/Images/villa-poolside-swimming-pool.jpg">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18113650466"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-18113650466');
-</script>
- <script type="application/ld+json">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "VacationRental",
@@ -521,8 +512,33 @@ img {
 }
 
 @media (min-width: 1121px) {
-  #poolside-house .house-slide-pair.poolside-pair img {
+  #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair img {
     max-height: 380px;
+  }
+}
+
+@media (max-width: 1120px) {
+  #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair figure {
+    min-height: 0;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 3 / 4;
+  }
+
+  #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair figcaption {
+    padding: 10px 12px;
+    font-size: 0.74rem;
   }
 }
 
@@ -1022,6 +1038,83 @@ footer {
   display: block;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 18px;
+  font-size: 0.9rem;
+}
+
+.footer-links a {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.cookie-banner {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 100;
+  width: min(420px, calc(100% - 36px));
+  padding: 20px;
+  border: 1px solid rgba(35, 65, 76, 0.14);
+  border-radius: 12px;
+  background: rgba(252, 247, 239, 0.98);
+  box-shadow: 0 20px 45px rgba(35, 65, 76, 0.18);
+  color: var(--ink);
+}
+
+.cookie-banner[hidden] {
+  display: none;
+}
+
+.cookie-banner h2 {
+  margin-bottom: 8px;
+  font-size: 1.35rem;
+}
+
+.cookie-banner p {
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.cookie-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cookie-actions button,
+.cookie-actions a {
+  width: auto;
+  min-width: 104px;
+  margin: 0;
+  padding: 11px 15px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  letter-spacing: 0.11em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.cookie-actions .cookie-decline {
+  border: 1px solid rgba(35, 65, 76, 0.24);
+  background: transparent;
+  color: var(--ink);
+}
+
+.cookie-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(35, 65, 76, 0.18);
+  color: var(--ink);
+}
+
 @media (max-width: 1120px) {
   #poolside-house .house-showcase {
     grid-template-columns: 1fr;
@@ -1161,27 +1254,6 @@ footer {
     max-height: 386px;
   }
 
-  #poolside-house .house-slide-pair.poolside-pair {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  #poolside-house .house-slide-pair.poolside-pair figure {
-    min-height: 252px;
-    height: 252px;
-    max-height: 252px;
-  }
-
-  #poolside-house .house-slide-pair.poolside-pair img {
-    height: 100%;
-    object-fit: cover;
-  }
-
-  #poolside-house .house-slide-pair.poolside-pair figcaption {
-    padding: 10px 12px;
-    font-size: 0.74rem;
-  }
-
   .location-facts,
   .key-stats {
     grid-template-columns: 1fr;
@@ -1279,6 +1351,7 @@ footer {
     grid-column: auto;
   }
 }
+
 </style>
 </head>
 
@@ -1412,7 +1485,7 @@ footer {
                     </figure>
                   </div>
                 </div>
-                <div class="house-slide">
+                <div class="house-slide poolside-pair-slide">
                   <div class="house-slide-pair poolside-pair">
                     <figure>
                       <img class="poolside-pair-bedroom" src="Images/villa-poolside-second-bedroom.jpg" alt="Bedroom in the Poolside House">
@@ -1711,6 +1784,9 @@ footer {
             <button type="submit">Send Enquiry</button>
           </div>
         </div>
+        <p class="booking-footnote">
+          By submitting an enquiry, you agree that we may use your details to respond to your request. See our <a href="/privacy-policy.html">Privacy Policy</a>.
+        </p>
       </form>
 
       <div class="note-card booking-card-enquiry">
@@ -1733,11 +1809,98 @@ footer {
 <footer>
   <div class="footer-shell">
     <img class="footer-logo" src="Images/villa_logo_white.png" alt="Villa Ariadne logo">
+    <div class="footer-links" aria-label="Legal links">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/privacy-policy.html#cookie-notice">Cookie Notice</a>
+    </div>
     <p>&copy; 2026 Villa Ariadne. All rights reserved.</p>
   </div>
 </footer>
 
+<aside class="cookie-banner" id="cookie-banner" aria-labelledby="cookie-banner-title" hidden>
+  <h2 id="cookie-banner-title">Cookies on this website</h2>
+  <p>
+    We use necessary cookies for the site and optional advertising cookies for Google Ads. Advertising cookies only load if you accept them.
+  </p>
+  <div class="cookie-actions">
+    <button type="button" id="cookie-accept">Accept</button>
+    <button class="cookie-decline" type="button" id="cookie-decline">Decline</button>
+    <a href="/privacy-policy.html#cookie-notice">Learn more</a>
+  </div>
+</aside>
+
 <script>
+const GOOGLE_ADS_ID = "AW-18113650466";
+const COOKIE_CHOICE_KEY = "villaAriadneAdvertisingCookies";
+
+function loadGoogleAdsTag() {
+  if (window.__villaAriadneGoogleAdsLoaded) {
+    return;
+  }
+
+  window.__villaAriadneGoogleAdsLoaded = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", GOOGLE_ADS_ID);
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GOOGLE_ADS_ID);
+  document.head.appendChild(script);
+}
+
+function getCookieChoice() {
+  try {
+    return localStorage.getItem(COOKIE_CHOICE_KEY);
+  } catch (error) {
+    return null;
+  }
+}
+
+function setCookieChoice(choice) {
+  try {
+    localStorage.setItem(COOKIE_CHOICE_KEY, choice);
+  } catch (error) {
+  }
+}
+
+function setupCookieBanner() {
+  const banner = document.getElementById("cookie-banner");
+  const acceptButton = document.getElementById("cookie-accept");
+  const declineButton = document.getElementById("cookie-decline");
+  const storedChoice = getCookieChoice();
+
+  if (storedChoice === "accepted") {
+    loadGoogleAdsTag();
+    return;
+  }
+
+  if (!banner || !acceptButton || !declineButton) {
+    return;
+  }
+
+  if (storedChoice !== "declined") {
+    banner.hidden = false;
+  }
+
+  acceptButton.addEventListener("click", () => {
+    setCookieChoice("accepted");
+    banner.hidden = true;
+    loadGoogleAdsTag();
+  });
+
+  declineButton.addEventListener("click", () => {
+    setCookieChoice("declined");
+    banner.hidden = true;
+  });
+}
+
+setupCookieBanner();
+
 const calendarStatus = document.getElementById("calendar-status");
 const calendarMonths = document.getElementById("calendar-months");
 const dateSelectionMessage = document.getElementById("date-selection-message");
