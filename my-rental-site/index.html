@@ -504,8 +504,18 @@ img {
 }
 
 @media (min-width: 1121px) {
+  #poolside-house .house-photo-main figure,
+  #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair figure {
+    height: 404px;
+    max-height: 404px;
+    aspect-ratio: auto;
+  }
+
+  #poolside-house .house-photo-main img,
   #poolside-house .poolside-pair-slide .house-slide-pair.poolside-pair img {
-    max-height: 380px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
