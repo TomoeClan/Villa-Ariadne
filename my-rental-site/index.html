@@ -1970,11 +1970,12 @@ function buildMonth(date, blockedDates) {
     const current = new Date(year, month, day);
     const iso = toIsoDate(current);
     const cell = document.createElement("div");
-    const isBlocked = blockedDates.has(iso);
+    const isPastDate = iso < toIsoDate(new Date());
+    const isBlocked = isPastDate || blockedDates.has(iso);
 
     cell.className = "calendar-day " + (isBlocked ? "is-blocked" : "is-available");
     cell.textContent = day;
-    cell.title = isBlocked ? "Blocked or booked" : "Available";
+    cell.title = isPastDate ? "Unavailable (past date)" : isBlocked ? "Blocked or booked" : "Available";
     daysGrid.appendChild(cell);
   }
 
